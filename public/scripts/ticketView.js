@@ -9,11 +9,13 @@ async function getTickets() {
             "Content-type": "application/json"
         }
     });
-    const ticketsList = await response.json();
+    const ticketsList = await response.json();    
     return ticketsList;
 };
 
-function displayTickets(ticketsList) {
+async function displayTickets() {
+    let ticketsList = await getTickets();
+    console.log(ticketsList);
     todo.replaceChildren();
     ongoing.replaceChildren();
     done.replaceChildren();
@@ -42,12 +44,8 @@ function displayTickets(ticketsList) {
                 done.appendChild(draggable);
                 break;
             }
-            default: {
-                break;
-            }
         }
     });
 };
 
-getTickets();
 displayTickets();
