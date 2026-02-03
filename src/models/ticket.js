@@ -1,4 +1,3 @@
-
 import mongoose from "mongoose";
 
 const ticketModel = mongoose.Schema({
@@ -19,4 +18,3 @@ const ticketModel = mongoose.Schema({
 })
 
 export const Ticket = mongoose.model("tickets", ticketModel);
-
