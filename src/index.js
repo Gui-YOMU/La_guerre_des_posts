@@ -3,9 +3,9 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 
-import ticketRouter from "./router/ticketRouter.js";
-import administrateurRouter from "./router/administrateurRouter.js";
-import employeRouter from "./router/employeRouter.js";
+// import {ticketRouter} from "./routers/ticketRouter.js";
+// import {administrateurRouter} from "./routers/administrateurRouter.js";
+import {employeRouter} from "./routers/employeRouter.js";
 
 const port = process.env.PORT;
 const db_url = process.env.DB_URL;
@@ -31,8 +31,8 @@ app.get("/", (req, res) => {
     res.json(message)
 })
 
-app.use(ticketRouter);
-app.use(administrateurRouter);
+// app.use(ticketRouter);
+// app.use(administrateurRouter);
 app.use(employeRouter);
 
 app.listen(port, (error) => {
