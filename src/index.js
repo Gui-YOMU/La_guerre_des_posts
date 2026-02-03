@@ -34,8 +34,8 @@ mongoose.connect(db_url)
 });
 
     app.use('/admin', administrateurRouter); 
-   // app.use('/tickets', ticketRouter);
-   // app.use('/employe', employeRouter);
+   app.use('/tickets', ticketRouter);
+   app.use('/employe', employeRouter);
 
 app.get("/", (req, res) => {
     const message = { message: "Bonjour" };
