@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PostRi7 - Espace Kevin (Admin)</title>
+  <link rel="stylesheet" href="public/css/style.css" />
+</head>
+<body>
+
+  <header>
+    <h1>Tableau de Bord de Kevin</h1>
+    <p>Gestionnaire de tickets PostRi7</p>
+  </header>
+
+  <section id="creation-ticket">
+    <h2>Ajouter une nouvelle tâche</h2>
+
+    <div class="form-group">
+      
+      <input
+        type="text"
+        id="title"
+        placeholder="Titre du ticket (ex: Debug API)"
+        required
+      />
+
+      <textarea
+        id="content"
+        placeholder="Description de la tâche..."
+        rows="4"
+      ></textarea>
+
+      <button type="button" onclick="createTicket()">Créer le ticket</button>
+    </div>
+
+    
+    <div class="form-group">
+      <label for="employeeSelect">Assigner à un employé :</label>
+      <select id="employeeSelect">
+        <option value="">-- Sélectionner un employé --</option>
+      </select>
+      <small>Cette liste sera remplie quand l'API employés sera prête.</small>
+    </div>
+  </section>
+
+  <main class="kanban">
+    <div class="column" id="todo">
+      <h3>À FAIRE (Todo)</h3>
+      <div class="cards" id="todo-cards"></div>
+    </div>
+
+    <div class="column" id="doing">
+      <h3>EN COURS (Doing)</h3>
+      <div class="cards" id="doing-cards"></div>
+    </div>
+
+    <div class="column" id="done">
+      <h3>TERMINÉ (Done)</h3>
+      <div class="cards" id="done-cards"></div>
+    </div>
+  </main>
+
+ 
+  <script src="/js/adminScript.js"></script>
+</body>
+</html>
