@@ -7,7 +7,7 @@ let dragged;
 async function getTickets() {
     let url = "http://localhost:3000/tickets";
     // if (employee) {
-    //     url += `id=${employeeId}`;
+    //     url += `?id=${employeeId}`;
     // }
     const response = await fetch(url, {
         method: "GET",
