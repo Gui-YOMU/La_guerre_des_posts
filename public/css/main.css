@@ -42,5 +42,33 @@ form div {
 label {
     margin-bottom: 10px;
     font-size: 20px;
-    color: #555;
+    color: #484646;
+}
+input {
+    padding: 0.6rem 0.7rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+button {
+    margin-top: 1rem;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    background: #667eea;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+   
+}
+
+button:hover {
+    background: #5a6fe0;
+}
+
+button:active {
+    transform: scale(0.98);
 }
