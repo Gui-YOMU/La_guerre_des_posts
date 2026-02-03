@@ -1,8 +1,22 @@
-import mongoose from 'mongoose';
-const ticketSchema = new mongoose.Schema({
-    titre: String,
-    description: String,
-    etat: { type: String, default: 'Todo' },
-    assigneA: { type: mongoose.Schema.Types.ObjectId, ref: 'Administrateur' }
-});
-export default mongoose.model('Ticket', ticketSchema);
+
+import mongoose from "mongoose";
+
+const ticketModel = mongoose.Schema({
+    title: {
+        type: String,
+        required: [true, "Un titre est requis."]
+    },
+    content: {
+        type: String,
+        required: [true, "Une description est requise."]
+    },
+    category: {
+        type: String, default: "todo"
+    },
+    employee: {
+        type: String
+    }
+})
+
+export const Ticket = mongoose.model("tickets", ticketModel);
+
