@@ -4,29 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/styles/ticketView.css">
     <title>Tickets</title>
 </head>
 
 <body>
     <main>
-        <div>
+        <div id="user">
             <h1>Bienvenue 'user'</h1>
             <button type="button" class="admin">Mode administrateur</button>
         </div>
         <section>
             <h2>Liste des tâches</h2>
-            <article>
-                <h3>À faire</h3>
-                <div id="todo" class="drop"></div>
-            </article>
-            <article>
-                <h3>En cours</h3>
-                <div id="ongoing" class="drop"></div>
-            </article>
-            <article>
-                <h3>Terminées</h3>
-                <div id="done" class="drop"></div>
-            </article>
+            <div id="tasklist">
+                <article>
+                    <h3>À faire</h3>
+                    <div id="todo" class="drop"></div>
+                </article>
+                <article>
+                    <h3>En cours</h3>
+                    <div id="ongoing" class="drop"></div>
+                </article>
+                <article>
+                    <h3>Terminées</h3>
+                    <div id="done" class="drop"></div>
+                </article>
+            </div>
         </section>
     </main>
 

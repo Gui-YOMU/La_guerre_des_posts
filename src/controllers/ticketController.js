@@ -2,7 +2,12 @@ import { Ticket } from "../models/ticket.js";
 
 export async function getTickets(req, res) {
     try {
-        const allTickets = await Ticket.find();
+        const params = {};
+        if (req.query.id) {
+            const id = req.query.id;
+            params._id = id;
+        }
+        const allTickets = await Ticket.find(params);
         res.json(allTickets);
     } catch (error) {
         console.error(error);
@@ -29,17 +34,6 @@ export async function updateTicket(req, res) {
     } catch (error) {
         console.error(error);
         res.json({ message: "La modification du ticket a échoué." });
-    }
-}
-
-export async function updateTicketCategory(req, res) {
-    try {
-        const updatedTicket = new Ticket(req.body);
-        await Ticket.updateOne({ _id: req.params.id }, req.body);
-        res.json({ message: "Le ticket a été déplacé avec succès." });
-    } catch (error) {
-        console.error(error);
-        res.json({ message: "Le déplacement du ticket a échoué." });
     }
 }
 

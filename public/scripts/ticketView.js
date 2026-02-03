@@ -5,7 +5,11 @@ const drops = document.querySelectorAll(".drop");
 let dragged;
 
 async function getTickets() {
-    const response = await fetch("http://localhost:3000/tickets", {
+    let url = "http://localhost:3000/tickets";
+    // if (employee) {
+    //     url += `id=${employeeId}`;
+    // }
+    const response = await fetch(url, {
         method: "GET",
         headers: {
             "Content-type": "application/json"
@@ -53,8 +57,6 @@ async function displayTickets() {
     });
 };
 
-displayTickets();
-
 async function updateTicketCategory(id, category) {
     const response = await fetch(`http://localhost:3000/tickets/${id}`, {
         method: "PATCH",
@@ -75,5 +77,8 @@ drops.forEach(drop => {
         updateTicketCategory(dragged.id, drop.id)
         dragged.parentNode.removeChild(dragged);
         e.target.appendChild(dragged);
+        displayTickets();
     })
 })
+
+displayTickets();
