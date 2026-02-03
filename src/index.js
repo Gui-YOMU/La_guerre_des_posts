@@ -3,8 +3,8 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 
-// import {ticketRouter} from "./routers/ticketRouter.js";
-// import {administrateurRouter} from "./routers/administrateurRouter.js";
+import {ticketRouter} from "./routers/ticketRouter.js";
+import {administrateurRouter} from "./routers/administrateurRouter.js";
 import {employeRouter} from "./routers/employeRouter.js";
 
 const port = process.env.PORT;
@@ -31,8 +31,8 @@ app.get("/", (req, res) => {
     res.json(message)
 })
 
-// app.use(ticketRouter);
-// app.use(administrateurRouter);
+app.use(ticketRouter);
+app.use(administrateurRouter);
 app.use(employeRouter);
 
 app.listen(port, (error) => {
@@ -40,6 +40,5 @@ app.listen(port, (error) => {
         console.error(error);
     } else {
         console.log(`Le serveur est lancé sur l'adresse http://localhost:${port}`);
-
     }
 })
