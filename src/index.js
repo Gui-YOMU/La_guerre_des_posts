@@ -7,8 +7,15 @@ import {ticketRouter} from "./routers/ticketRouter.js";
 import {administrateurRouter} from "./routers/administrateurRouter.js";
 import {employeRouter} from "./routers/employeRouter.js";
 
-const port = process.env.PORT;
+
+const app = express();
+
+const port = process.env.PORT || 3000;
 const db_url = process.env.DB_URL;
+
+app.use(cors());
+app.use(express.json());
+app.use(express.static('public'));
 
 mongoose.set("strictQuery", true);
 mongoose.connect(db_url)
@@ -22,18 +29,18 @@ mongoose.connect(db_url)
         console.log("Promesse tenue.");
     })
 
-const app = express();
-app.use(cors());
-app.use(express.json());
+    app.get("/admin-dashboard", (req, res) => {
+    res.sendFile("views/administrateur/index.html", { root: "src" });
+});
+
+    app.use('/admin', administrateurRouter); 
+   // app.use('/tickets', ticketRouter);
+   // app.use('/employe', employeRouter);
 
 app.get("/", (req, res) => {
     const message = { message: "Bonjour" };
     res.json(message)
 })
-
-app.use(ticketRouter);
-app.use(administrateurRouter);
-app.use(employeRouter);
 
 app.listen(port, (error) => {
     if (error) {
