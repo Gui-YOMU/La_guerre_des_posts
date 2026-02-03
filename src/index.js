@@ -12,7 +12,7 @@ import {employeRouter} from "./routers/employeRouter.js";
 
 const app = express();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 const db_url = process.env.DB_URL;
 
 app.use(cors());
@@ -32,12 +32,12 @@ mongoose.connect(db_url)
     })
 
     app.get("/admin-dashboard", (req, res) => {
-    res.sendFile("views/administrateur/index.html", { root: "src" });
+    res.sendFile("views/index.html", { root: "src" });
 });
 
-    app.use('/admin', administrateurRouter); 
-   app.use('/tickets', ticketRouter);
-   app.use('/employe', employeRouter);
+    app.use(administrateurRouter); 
+   app.use(ticketRouter);
+   app.use(employeRouter);
 
 app.get("/", (req, res) => {
     const message = { message: "Bonjour" };
