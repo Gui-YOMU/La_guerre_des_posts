@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Ticket from "../models/ticket.js";
+import {Ticket} from "../models/ticket.js";
 
 const STATUS = {
   OK: 200,
