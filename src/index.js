@@ -30,7 +30,7 @@ mongoose.connect(db_url)
     })
 
     app.get("/admin-dashboard", (req, res) => {
-    res.sendFile("views/administrateur/index.html", { root: "src" });
+    res.sendFile("views/index.html", { root: "src" });
 });
 
     app.use(administrateurRouter); 

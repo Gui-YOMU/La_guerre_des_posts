@@ -4,11 +4,16 @@ const done = document.querySelector("#done");
 const drops = document.querySelectorAll(".drop");
 let dragged;
 
+// Fonction de récupération de la liste des tickets via API
+
 async function getTickets() {
     let url = "http://localhost:3000/tickets";
+
+    // Une fois l'accès à l'id de l'employé connecté, modification de l'url pour ne récupérer que les tickets liés à l'employé
     // if (employee) {
     //     url += `?id=${employeeId}`;
     // }
+    
     const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -18,6 +23,8 @@ async function getTickets() {
     const ticketsList = await response.json();
     return ticketsList;
 };
+
+// Fonction d'affichage de la liste des tickets
 
 async function displayTickets() {
     let ticketsList = await getTickets();
@@ -37,6 +44,8 @@ async function displayTickets() {
         content.textContent = ticket.content;
         draggable.appendChild(title);
         draggable.appendChild(content);
+
+        // Ajout à chaque ticket d'un event "drag"
         draggable.addEventListener("dragstart", (e) => {
             dragged = e.target;
         })
@@ -57,6 +66,8 @@ async function displayTickets() {
     });
 };
 
+// Fonction de modification de la catégorie pour que le ticket reste affiché dans sa nouvelle catégorie
+
 async function updateTicketCategory(id, category) {
     const response = await fetch(`http://localhost:3000/tickets/${id}`, {
         method: "PATCH",
@@ -69,6 +80,7 @@ async function updateTicketCategory(id, category) {
 }
 
 drops.forEach(drop => {
+    // Ajout à chaque catégorie d'un event "drop"
     drop.addEventListener("dragover", (e) => {
         e.preventDefault();
     });
