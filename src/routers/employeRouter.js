@@ -5,13 +5,15 @@ import {ajouterEmploye,
         recupererEmployes, 
         recupererUnEmploye, 
         modifierUnEmploye, 
-        supprimerUnEmploye 
+        supprimerUnEmploye, 
+        loginByMail
     } from "../controllers/employeController.js"
 
 export const employeRouter = express.Router();
 
 
 employeRouter.post("/employe", ajouterEmploye) //creer
+employeRouter.post("/login",loginByMail) //connexion
 
 employeRouter.get("/employe", recupererEmployes) // liste
 employeRouter.get("/employe/:id", recupererUnEmploye) 

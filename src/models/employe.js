@@ -26,7 +26,7 @@ const employeSchema = mongoose.Schema(
     },
 
     motDePasse: {
-      type: String,
+      type: String, 
       required: [true, "Le mot de passe est obligatoire"],
       match: [
         /^(?=.*[A-Z])(?=.*\d).{8,}$/,
@@ -38,12 +38,11 @@ const employeSchema = mongoose.Schema(
   { timestamps: true },
 );
 
-employeSchema.pre("save", async function (next) {
-  if (!this.isModified("motDePasse")) return next();
+ employeSchema.pre("save", async function () {
+  if (!this.isModified("motDePasse")) throw new Error("Mot de passe incorrect");
 
   const salt = await bcrypt.genSalt(10);
   this.motDePasse = await bcrypt.hash(this.motDePasse, salt);
-  next();
 });
 
 export const Employe = mongoose.model("Employe", employeSchema);

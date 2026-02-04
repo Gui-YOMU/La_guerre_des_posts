@@ -16,7 +16,7 @@ const administrateurSchema = new mongoose.Schema(
       match: [/^\S+@\S+\.\S+$/, "Format d'email invalide"], 
     },
     motDePasse: {
-      type: String,
+      type: String, 
       required: [true, "Le mot de passe est obligatoire"],
       match: [
         /^(?=.*[A-Z])(?=.*\d).{8,}$/,
