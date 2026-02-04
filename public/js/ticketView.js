@@ -3,7 +3,11 @@ const ongoing = document.querySelector("#ongoing");
 const done = document.querySelector("#done");
 const drops = document.querySelectorAll(".drop");
 let dragged;
+const messWelcome = document.querySelector("h1")
+const lastname = sessionStorage.getItem("lastname")
+const firstname = sessionStorage.getItem("firstname")
 
+messWelcome.textContent = "bienvenue " + lastname + " " + firstname
 // Fonction de récupération de la liste des tickets via API
 
 async function getTickets() {

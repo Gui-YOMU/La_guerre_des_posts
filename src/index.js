@@ -17,6 +17,24 @@ app.use(express.json());
 app.use(express.static("public"));
 
 mongoose.set("strictQuery", true);
+mongoose.connect(db_url)
+    .then(() => {
+        console.log("Connecté à la base de données.");
+    })
+    .catch((error) => {
+        console.error(error);
+    })
+    .finally(() => {
+        console.log("Promesse tenue.");
+    })
+
+    app.get("/admin-dashboard", (req, res) => {
+        res.sendFile("views/index.html", { root: "src" });
+    });
+
+    app.use("/admin", administrateurRouter); 
+   app.use(ticketRouter);
+   app.use(employeRouter);
 mongoose
   .connect(db_url)
   .then(() => {

@@ -3,10 +3,11 @@ document.addEventListener("DOMContentLoaded", () => {
   loadTickets();
 });
 
+const url = "http://localhost:3000/admin";
 
 async function loadTickets() {
   try {
-    const response = await fetch("/admin/tickets");
+    const response = await fetch(url + "/tickets");
     const tickets = await response.json();
 
   
@@ -64,25 +65,25 @@ function createTicketHTML(ticket) {
 async function createTicket() {
   const title = document.getElementById("title").value.trim();
   const content = document.getElementById("content").value.trim();
-
+  
   if (!title || !content) {
     alert("Veuillez remplir le titre et la description.");
     return;
   }
-
+  
   try {
-    const response = await fetch("/admin/tickets", {
+    const response = await fetch(url + "/tickets", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title, content }),
     });
-
+    
     if (!response.ok) {
       const data = await response.json();
       alert(data.error || "Erreur lors de la création du ticket.");
       return;
     }
-
+    
     
     document.getElementById("title").value = "";
     document.getElementById("content").value = "";
@@ -93,11 +94,12 @@ async function createTicket() {
     alert("Erreur serveur.");
   }
 }
+document.querySelector("button").addEventListener("click",createTicket);
 
 
 async function updateStatus(ticketId, status) {
   try {
-    await fetch(`/admin/tickets/${ticketId}/status`, {
+    await fetch(url + `/tickets/${ticketId}/status`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status }),
@@ -113,7 +115,7 @@ async function updateStatus(ticketId, status) {
 
 async function assignEmployee(ticketId, employeeId) {
   try {
-    await fetch(`/admin/tickets/${ticketId}/assign`, {
+    await fetch(url + `/tickets/${ticketId}/assign`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ employeeId }),
@@ -131,7 +133,7 @@ async function deleteTicket(ticketId) {
   if (!confirm("Voulez-vous vraiment supprimer ce ticket ?")) return;
 
   try {
-    await fetch(`/admin/tickets/${ticketId}`, {
+    await fetch(url + `/tickets/${ticketId}`, {
       method: "DELETE",
     });
 
