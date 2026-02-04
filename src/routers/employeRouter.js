@@ -1,22 +1,20 @@
-
 import express from "express";
 
-import {ajouterEmploye, 
-        recupererEmployes, 
-        recupererUnEmploye, 
-        modifierUnEmploye, 
-        supprimerUnEmploye 
-    } from "../controllers/employeController.js"
+import {
+  ajouterEmploye,
+  recupererEmployes,
+  recupererUnEmploye,
+  modifierUnEmploye,
+  supprimerUnEmploye,
+} from "../controllers/employeController.js";
 
 export const employeRouter = express.Router();
 
+employeRouter.post("/", ajouterEmploye); //creer
 
-employeRouter.post("/employe", ajouterEmploye) //creer
+employeRouter.get("/", recupererEmployes); // liste
+employeRouter.get("/:id", recupererUnEmploye);
 
-employeRouter.get("/employe", recupererEmployes) // liste
-employeRouter.get("/employe/:id", recupererUnEmploye) 
+employeRouter.patch("/:id", modifierUnEmploye);
 
-employeRouter.patch("/employe/:id", modifierUnEmploye)
-
-employeRouter.delete("/employe/:id", supprimerUnEmploye)
-
+employeRouter.delete("/:id", supprimerUnEmploye);
