@@ -10,10 +10,10 @@ const ticketModel = mongoose.Schema(
       type: String,
       required: [true, "Une description est requise."],
     },
-    category: {
+    status: {
       type: String,
-      enum: ["TODO", "DOING", "DONE"],
-      default: "TODO",
+      enum: ["todo", "doing", "done"],
+      default: "todo",
     },
     employee: {
       type: mongoose.Schema.Types.ObjectId,
