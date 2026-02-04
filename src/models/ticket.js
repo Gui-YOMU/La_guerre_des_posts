@@ -12,8 +12,8 @@ const ticketModel = mongoose.Schema(
     },
     category: {
       type: String,
-      enum: ["TODO", "DOING", "DONE"],
-      default: "TODO",
+      enum: ["todo", "doing", "done"],
+      default: "todo",
     },
     employee: {
       type: mongoose.Schema.Types.ObjectId,
