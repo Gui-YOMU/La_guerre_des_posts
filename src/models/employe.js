@@ -38,12 +38,11 @@ const employeSchema = mongoose.Schema(
   { timestamps: true },
 );
 
-employeSchema.pre("save", async function (next) {
-  if (!this.isModified("motDePasse")) return next();
+employeSchema.pre("save", async function () {
+  if (!this.isModified("motDePasse")) return;
 
   const salt = await bcrypt.genSalt(10);
   this.motDePasse = await bcrypt.hash(this.motDePasse, salt);
-  next();
 });
 
 export const Employe = mongoose.model("Employe", employeSchema);
