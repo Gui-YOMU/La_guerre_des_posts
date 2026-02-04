@@ -1,34 +1,9 @@
+import mongoose from "mongoose";
 import { Employe } from "../models/employe.js";
 import bcrypt from "bcrypt";
 
-
-export async function ajouterEmploye(req, res) { // ok
-    try {
-        const data = req.body;
-        const employe = new Employe(data)
-        await employe.save();
-        res.json({ ok: true });
-
-    } catch (error) {
-        console.error(error);
-        res.json({ ok: false, error })
-    }
-}
-
-export async function recupererEmployes(req, res) { // OK
-    try {
-        const employe = await Employe.find()
-        res.json(employe)
-
-    } catch (error) {
-        console.error(error);
-        res.json({ ok: false, error })
-    }
-import mongoose from "mongoose";
-import { Employe } from "../models/employe.js";
-
+// ➕ Créer un employé
 export async function ajouterEmploye(req, res) {
-  // ok
   try {
     const data = req.body;
     const employe = new Employe(data);
@@ -40,88 +15,57 @@ export async function ajouterEmploye(req, res) {
   }
 }
 
+// 📋 Récupérer tous les employés
 export async function recupererEmployes(req, res) {
-  // OK
   try {
-    const employe = await Employe.find();
-    res.json(employe);
+    const employes = await Employe.find();
+    res.json(employes);
   } catch (error) {
     console.error(error);
     res.json({ ok: false, error });
   }
 }
+
+// 🔐 Login employé
 export async function loginByMail(req, res) {
-    try {
+  try {
+    const { email, motDePasse } = req.body;
 
-        const { email, motDePasse } = req.body
-        const employLogin = await Employe.findOne({ email }).select('motDePasse email')
-        
-        if (!employLogin) {
-            throw new Error("Adresse mail introuvable");
-        }
+    const employLogin = await Employe.findOne({ email }).select(
+      "motDePasse email firstname lastname",
+    );
 
-        const passwordValid = await bcrypt.compare(motDePasse, employLogin.motDePasse)
-
-        if (!passwordValid) {
-            throw new Error("Erreur mot de passe");
-        }
-
-        res.json({
-            ok: true,
-            message: "connexion réussi",
-            id: employLogin._id,
-            lastname: employLogin.lastname,
-            firstname: employLogin.firstname
-        })
-    } catch (error) {
-        console.error(error);
-        res.json({ ok: false, error })
+    if (!employLogin) {
+      throw new Error("Adresse mail introuvable");
     }
-}
-export async function recupererUnEmploye(req, res) { // OK
-    const id = req.params.id;
-    try {
-        const employe = await Employe.findOne({ _id: id })
-        res.json(employe);
 
-    } catch (error) {
-        console.error(error);
-        res.json({ ok: false, error })
+    const passwordValid = await bcrypt.compare(
+      motDePasse,
+      employLogin.motDePasse,
+    );
 
+    if (!passwordValid) {
+      throw new Error("Erreur mot de passe");
     }
+
+    res.json({
+      ok: true,
+      message: "Connexion réussie",
+      id: employLogin._id,
+      lastname: employLogin.lastname,
+      firstname: employLogin.firstname,
+    });
+  } catch (error) {
+    console.error(error);
+    res.json({ ok: false, error: error.message });
+  }
 }
 
-export async function modifierUnEmploye(req, res) { // OK
-    const id = req.params.id;
-    const data = req.body;
-    try {
-        const employe = await Employe.updateOne({ _id: id }, data)
-        res.json(employe)
-
-    } catch (error) {
-        console.error(error);
-        res.json({ ok: false, error })
-
-    }
-}
-
-export async function supprimerUnEmploye(req, res) { // OK
-    const id = req.params.id;
-    try {
-        const employe = await Employe.deleteOne({ _id: id })
-        res.json(employe);
-
-    } catch (error) {
-        console.error(error);
-        res.json({ ok: false, error })
-
-    }
-}
+// 🔍 Récupérer un employé
 export async function recupererUnEmploye(req, res) {
-  // OK
   const id = req.params.id;
   try {
-    const employe = await Employe.findOne({ _id: id });
+    const employe = await Employe.findById(id);
     res.json(employe);
   } catch (error) {
     console.error(error);
@@ -129,8 +73,8 @@ export async function recupererUnEmploye(req, res) {
   }
 }
 
+// ✏️ Modifier un employé
 export async function modifierUnEmploye(req, res) {
-  // OK
   const id = req.params.id;
   const data = req.body;
   try {
@@ -142,8 +86,8 @@ export async function modifierUnEmploye(req, res) {
   }
 }
 
+// ❌ Supprimer un employé
 export async function supprimerUnEmploye(req, res) {
-  // OK
   const id = req.params.id;
   try {
     const employe = await Employe.deleteOne({ _id: id });
