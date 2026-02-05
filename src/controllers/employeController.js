@@ -29,7 +29,7 @@ export async function loginByMail(req, res) {
     try {
 
         const { email, motDePasse } = req.body
-        const employLogin = await Employe.findOne({ email }).select('motDePasse email')
+        const employLogin = await Employe.findOne({ email }).select('motDePasse email lastname firstname')
         
         if (!employLogin) {
             throw new Error("Adresse mail introuvable");
@@ -40,13 +40,13 @@ export async function loginByMail(req, res) {
         if (!passwordValid) {
             throw new Error("Erreur mot de passe");
         }
-
+        
         res.json({
             ok: true,
             message: "connexion réussi",
             id: employLogin._id,
             lastname: employLogin.lastname,
-            firstname: employLogin.firstname
+            firstname: employLogin.firstname 
         })
     } catch (error) {
         console.error(error);
