@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 import { Employe } from "../models/employe.js";
 import bcrypt from "bcrypt";
 
-// ➕ Créer un employé
 export async function ajouterEmploye(req, res) {
+  // ok
   try {
     const data = req.body;
     const employe = new Employe(data);
@@ -15,7 +15,6 @@ export async function ajouterEmploye(req, res) {
   }
 }
 
-// 📋 Récupérer tous les employés
 export async function recupererEmployes(req, res) {
   try {
     const employes = await Employe.find();
@@ -26,7 +25,6 @@ export async function recupererEmployes(req, res) {
   }
 }
 
-// 🔐 Login employé
 export async function loginByMail(req, res) {
   try {
     const { email, motDePasse } = req.body;
@@ -61,11 +59,11 @@ export async function loginByMail(req, res) {
   }
 }
 
-// 🔍 Récupérer un employé
 export async function recupererUnEmploye(req, res) {
+  // OK
   const id = req.params.id;
   try {
-    const employe = await Employe.findById(id);
+    const employe = await Employe.findOne({ _id: id });
     res.json(employe);
   } catch (error) {
     console.error(error);
@@ -73,8 +71,8 @@ export async function recupererUnEmploye(req, res) {
   }
 }
 
-// ✏️ Modifier un employé
 export async function modifierUnEmploye(req, res) {
+  // OK
   const id = req.params.id;
   const data = req.body;
   try {
@@ -86,8 +84,8 @@ export async function modifierUnEmploye(req, res) {
   }
 }
 
-// ❌ Supprimer un employé
 export async function supprimerUnEmploye(req, res) {
+  // OK
   const id = req.params.id;
   try {
     const employe = await Employe.deleteOne({ _id: id });
