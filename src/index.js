@@ -17,24 +17,26 @@ app.use(express.json());
 app.use(express.static("public"));
 
 mongoose.set("strictQuery", true);
-mongoose.connect(db_url)
-    .then(() => {
-        console.log("Connecté à la base de données.");
-    })
-    .catch((error) => {
-        console.error(error);
-    })
-    .finally(() => {
-        console.log("Promesse tenue.");
-    })
+mongoose
+  .connect(db_url)
+  .then(() => {
+    console.log("Connecté à la base de données.");
+  })
+  .catch((error) => {
+    console.error(error);
+  })
+  .finally(() => {
+    console.log("Promesse tenue.");
+  });
 
-    app.get("/admin-dashboard", (req, res) => {
-        res.sendFile("views/index.html", { root: "src" });
-    });
+app.get("/admin-dashboard", (req, res) => {
+  res.sendFile("views/index.html", { root: "src" });
+});
 
-    app.use("/admin", administrateurRouter); 
-   app.use(ticketRouter);
-   app.use(employeRouter);
+app.use("/admin", administrateurRouter);
+app.use("/tickets", ticketRouter);
+app.use("/employe", employeRouter);
+
 mongoose
   .connect(db_url)
   .then(() => {
