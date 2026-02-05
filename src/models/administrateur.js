@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
-const administrateurSchema = new mongoose.Schema(
+const administrateurSchema =  mongoose.Schema(
   {
     nom: {
       type: String,
@@ -40,4 +40,4 @@ administrateurSchema.pre("save", async function (next) {
   next();
 });
 
-export default mongoose.model("Administrateur", administrateurSchema);
+export const Admin =  mongoose.model("Administrateur", administrateurSchema);
