@@ -49,7 +49,7 @@ async function createEmploye(lastname, firstname, email, password) {
     });
 
 
-
+    window.location.href = "/src/views/login.html"
     return response;
 
 }

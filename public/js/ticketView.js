@@ -6,8 +6,20 @@ let dragged;
 const messWelcome = document.querySelector("h1")
 const lastname = sessionStorage.getItem("lastname")
 const firstname = sessionStorage.getItem("firstname")
+const idEmploye = sessionStorage.getItem("id")
+const logout = document.querySelector("a")
 
-messWelcome.textContent = "bienvenue " + lastname + " " + firstname
+if (!idEmploye) {
+    window.location.href = "/src/views/login.html"
+   
+}
+logout.addEventListener("click",(e)=>{
+    sessionStorage.clear()
+})
+
+messWelcome.textContent = "Bonjour " + lastname + " " + firstname
+
+
 // Fonction de récupération de la liste des tickets via API
 
 async function getTickets() {
@@ -17,7 +29,7 @@ async function getTickets() {
     // if (employee) {
     //     url += `?id=${employeeId}`;
     // }
-    
+
     const response = await fetch(url, {
         method: "GET",
         headers: {

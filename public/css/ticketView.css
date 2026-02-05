@@ -10,6 +10,13 @@
     gap: 20px;
     padding: 20px;
 }
+a{
+    display: flex;
+    justify-content: right;
+    padding: 15px;
+    color: #667eea;
+    text-decoration: none;
+}
 
 h2 {
     text-align: center;
