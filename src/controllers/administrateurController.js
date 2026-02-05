@@ -43,7 +43,8 @@ export const createTicket = async (req, res) => {
     const newTicket = new Ticket({
       title: title.trim(),
       content: content.trim(),
-      category: "todo",
+      status: "todo",
+      employee: req.body.employee,
     });
 
     await newTicket.save();

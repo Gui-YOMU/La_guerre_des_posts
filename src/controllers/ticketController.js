@@ -99,16 +99,8 @@ export const updateStatus = async (req, res) => {
 
     return res.status(200).json(ticket);
   } catch (error) {
-    console.error("UPDATE STATUS ERROR =", error);
-
-    return res.status(500).json({
-      error: error.message,
-    });
-  }
-
-  /*catch (error) {
     return res.status(500).json({
       error: "Erreur lors du changement de statut.",
     });
-  }*/
+  }
 };
