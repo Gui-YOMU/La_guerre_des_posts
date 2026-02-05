@@ -16,7 +16,7 @@ const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
 
 export const createTicket = async (req, res) => {
   try {
-    const { title, content } = req.body;
+    const { title, content, employee } = req.body;
 
     if (
       !title ||
@@ -44,7 +44,7 @@ export const createTicket = async (req, res) => {
       title: title.trim(),
       content: content.trim(),
       status: "todo",
-      employee: req.body.employee,
+      employee,
     });
 
     await newTicket.save();

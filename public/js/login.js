@@ -1,44 +1,42 @@
-const form = document.querySelector("#form")
+const form = document.querySelector("#form");
 
-form.addEventListener("submit",async (e)=>{
-    e.preventDefault()
-    const data = new FormData(e.target)
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const data = new FormData(e.target);
 
-    const emailRegex = /^\S+@\S+\.\S+$/
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/
+  const emailRegex = /^\S+@\S+\.\S+$/;
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
 
-    if (!emailRegex.test(data.get("email")) || !data.get("email")) {
-        alert("Adresse email invalide")
-        return
-       
-    }
+  if (!emailRegex.test(data.get("email")) || !data.get("email")) {
+    alert("Adresse email invalide");
+    return;
+  }
 
-    if (!passwordRegex.test(data.get("password"))) {
-           alert("Mot de passe invalide")
-           return
-    }
-    
-    await login(data.get("email"),data.get("password"))
-    
-})
+  if (!passwordRegex.test(data.get("password"))) {
+    alert("Mot de passe invalide");
+    return;
+  }
 
-async function login(email,password){
-    const response = await fetch("http://localhost:3000/login",{
-        method : "POST",
-        body : JSON.stringify({email,motDePasse : password}),
-        headers : {
-             'content-type': "application/json"
-        }
-    })
+  await login(data.get("email"), data.get("password"));
+});
 
-    const data = await response.json()
+async function login(email, password) {
+  const response = await fetch("http://localhost:3000/employe/login", {
+    method: "POST",
+    body: JSON.stringify({ email, motDePasse: password }),
+    headers: {
+      "content-type": "application/json",
+    },
+  });
 
-    if (data.ok) {
-        sessionStorage.setItem("id",data.id)
-        sessionStorage.setItem("lastname",data.lastname)
-        sessionStorage.setItem("firstname",data.firstname)
-        window.location.href = "/src/views/tickets.html"
-    }else{
-        alert("Adresse email ou mot de passe incorrect")
-    }
+  const data = await response.json();
+
+  if (data.ok) {
+    sessionStorage.setItem("id", data.id);
+    sessionStorage.setItem("lastname", data.lastname);
+    sessionStorage.setItem("firstname", data.firstname);
+    window.location.href = "/src/views/tickets.html";
+  } else {
+    alert("Adresse email ou mot de passe incorrect");
+  }
 }

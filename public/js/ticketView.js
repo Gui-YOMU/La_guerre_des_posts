@@ -2,21 +2,32 @@ const todo = document.querySelector("#todo");
 const doing = document.querySelector("#doing");
 const done = document.querySelector("#done");
 const drops = document.querySelectorAll(".drop");
-let dragged;
 const messWelcome = document.querySelector("h1");
 const lastname = sessionStorage.getItem("lastname");
 const firstname = sessionStorage.getItem("firstname");
+const idEmploye = sessionStorage.getItem("id");
+const logout = document.querySelector("a");
+
+let dragged;
+
+if (logout) {
+  logout.addEventListener("click", () => {
+    sessionStorage.clear();
+    window.location.href = "/src/views/login.html";
+  });
+}
 
 messWelcome.textContent = "bienvenue " + lastname + " " + firstname;
 // Fonction de récupération de la liste des tickets via API
 
 async function getTickets() {
+  const idEmploye = sessionStorage.getItem("id");
   let url = "http://localhost:3000/tickets";
+  if (idEmploye) {
+    url += `?employee=${idEmploye}`;
+  }
 
-  // Une fois l'accès à l'id de l'employé connecté, modification de l'url pour ne récupérer que les tickets liés à l'employé
-  // if (employee) {
-  //     url += `?id=${employeeId}`;
-  // }
+  console.log("URL tickets appelée :", url);
 
   const response = await fetch(url, {
     method: "GET",
@@ -51,7 +62,7 @@ async function displayTickets() {
 
     // Ajout à chaque ticket d'un event "drag"
     draggable.addEventListener("dragstart", (e) => {
-      dragged = e.target;
+      dragged = e.currentTarget;
     });
     switch (ticket.status) {
       case "todo": {
@@ -75,13 +86,17 @@ async function displayTickets() {
 // Fonction de modification de la catégorie pour que le ticket reste affiché dans sa nouvelle catégorie
 
 async function updateTicketStatus(id, status) {
-  const response = await fetch(`http://localhost:3000/tickets/${id}`, {
-    method: "PATCH",
-    headers: {
-      "Content-type": "application/json",
+  const employee = sessionStorage.getItem("id");
+  const response = await fetch(
+    `http://localhost:3000/tickets/${id}?employee=${employee}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ status }),
     },
-    body: JSON.stringify({ status }),
-  });
+  );
   return response;
 }
 
