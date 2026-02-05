@@ -40,6 +40,8 @@ const employeSchema = mongoose.Schema(
 
  employeSchema.pre("save", async function () {
   if (!this.isModified("motDePasse")) throw new Error("Mot de passe incorrect");
+employeSchema.pre("save", async function () {
+  if (!this.isModified("motDePasse")) return;
 
   const salt = await bcrypt.genSalt(10);
   this.motDePasse = await bcrypt.hash(this.motDePasse, salt);
