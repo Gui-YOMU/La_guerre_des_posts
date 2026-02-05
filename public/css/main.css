@@ -72,3 +72,7 @@ button:hover {
 button:active {
     transform: scale(0.98);
 }
+a{
+   color: #667eea;
+  text-align: center;
+}

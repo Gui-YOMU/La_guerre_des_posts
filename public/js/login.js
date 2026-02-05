@@ -33,11 +33,13 @@ async function login(email,password){
 
     const data = await response.json()
 
+
     if (data.ok) {
         sessionStorage.setItem("id",data.id)
         sessionStorage.setItem("lastname",data.lastname)
         sessionStorage.setItem("firstname",data.firstname)
         window.location.href = "/src/views/tickets.html"
+       
     }else{
         alert("Adresse email ou mot de passe incorrect")
     }
