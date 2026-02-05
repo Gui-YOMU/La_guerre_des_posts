@@ -41,7 +41,7 @@ export async function loginByMail(req, res) {
       if(!adminLogin){
         throw new Error("Adresse mail introuvable");
       }
-      // Admin
+      // connexion Admin
         res.json({
           ok: true,
           message: "Connexion réussie",
@@ -52,7 +52,7 @@ export async function loginByMail(req, res) {
         });
       
     }
-    // Employé
+    // connexion  Employé
     else{
           const passwordValid = await bcrypt.compare(
             motDePasse,

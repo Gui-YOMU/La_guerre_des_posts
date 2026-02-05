@@ -9,9 +9,11 @@ const firstname = sessionStorage.getItem("firstname")
 const idEmploye = sessionStorage.getItem("id")
 const logout = document.querySelector("a")
 
+
+
 if (!idEmploye) {
     window.location.href = "/src/views/login.html"
-   
+
 }
 logout.addEventListener("click",(e)=>{
     sessionStorage.clear()
