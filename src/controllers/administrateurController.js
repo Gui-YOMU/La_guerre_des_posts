@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 import { Ticket } from "../models/ticket.js";
 
+
+
+
+
+
 const STATUS = {
   OK: 200,
   CREATED: 201,
@@ -9,12 +14,14 @@ const STATUS = {
   SERVER_ERROR: 500,
 };
 
+
+
 const ALLOWED_STATUS = ["todo", "doing", "done"];
 const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
 
 // --- ADMIN CRUD ---
 
-export const createTicket = async (req, res) => {
+export const createTicket = async (req, res) => { 
   try {
     const { title, content } = req.body;
 

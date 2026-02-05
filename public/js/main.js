@@ -34,9 +34,6 @@ formulaire.addEventListener("submit", async (event) => {
 
     await createEmploye(data.get("lastname"), data.get("firstname"), data.get("email"), data.get("password"))
 
-
-
-
 })
 
 async function createEmploye(lastname, firstname, email, password) {

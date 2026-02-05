@@ -17,7 +17,7 @@ logout.addEventListener("click",(e)=>{
     sessionStorage.clear()
 })
 
-messWelcome.textContent = "Bonjour " + lastname + " " + firstname
+messWelcome.textContent = "Bonjour " + lastname + " " + firstname 
 
 
 // Fonction de récupération de la liste des tickets via API

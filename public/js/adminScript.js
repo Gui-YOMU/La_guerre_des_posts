@@ -1,7 +1,8 @@
-
+const idAdmin = sessionStorage.getItem("id")
 document.addEventListener("DOMContentLoaded", () => {
   loadTickets();
 });
+console.log(idAdmin);
 
 const url = "http://localhost:3000/admin";
 
