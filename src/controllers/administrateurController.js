@@ -25,6 +25,7 @@ export const createTicket = async (req, res) => {
   try {
     const { title, content, employee } = req.body;
 
+
     if (
       !title ||
       typeof title !== "string" ||
@@ -63,16 +64,18 @@ export const createTicket = async (req, res) => {
   }
 };
 
-/*export const listTickets = async (req, res) => {
+export const listTickets = async (req, res) => {
   try {
-    const tickets = await Ticket.find().sort({ createdAt: -1 });
+    const tickets = await Ticket.find().populate().sort({ createdAt: -1 });
+    console.log(tickets);
+    
     return res.status(STATUS.OK).json(tickets);
   } catch (error) {
     return res.status(STATUS.SERVER_ERROR).json({
       error: "Impossible de charger la liste des tickets.",
     });
   }
-};*/
+};
 
 export const updateTicket = async (req, res) => {
   try {
@@ -141,7 +144,7 @@ export const deleteTicket = async (req, res) => {
 export const assignEmployee = async (req, res) => {
   try {
     const { id } = req.params;
-    const { employeeId } = req.body;
+    const { employee } = req.body;
 
     if (!isValidObjectId(id)) {
       return res.status(STATUS.BAD_REQUEST).json({
@@ -149,7 +152,7 @@ export const assignEmployee = async (req, res) => {
       });
     }
 
-    if (!employeeId || !isValidObjectId(employeeId)) {
+    if (!employee || !isValidObjectId(employee)) {
       return res.status(STATUS.BAD_REQUEST).json({
         error: "Identifiant de l’employé invalide.",
       });
@@ -157,7 +160,7 @@ export const assignEmployee = async (req, res) => {
 
     const updated = await Ticket.findByIdAndUpdate(
       id,
-      { employee: employeeId },
+      { employee: employee },
       { new: true, runValidators: true },
     );
 
