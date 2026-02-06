@@ -3,11 +3,12 @@ import { Ticket } from "../models/ticket.js";
 
 export async function getTickets(req, res) {
   try {
-    //const { id, role } = req.user;
-    const role = "employe"; // ou admin ou employe temporaire pour le test
-    const employeeId = "698349f6792f119cbc759e76";
+    const { employee, role } = req.query;
+    let filter = {};
 
-    const filter = role === "admin" ? {} : { employee: employeeId };
+    if (role !== "admin" && employee) {
+      filter = { employee };
+    }
 
     const tickets = await Ticket.find(filter).sort({ createdAt: -1 });
 
@@ -23,10 +24,7 @@ export async function getTickets(req, res) {
 export const getTicketById = async (req, res) => {
   try {
     const { id } = req.params;
-
-    // Simulation en attendant la connexion
-    const role = "employe"; //ou admin
-    const employeeId = "698349f6792f119cbc759e7";
+    const { employee, role } = req.query;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({
@@ -35,26 +33,24 @@ export const getTicketById = async (req, res) => {
     }
 
     const ticket = await Ticket.findById(id);
+
     if (!ticket) {
       return res.status(404).json({
         error: "Ticket introuvable.",
       });
     }
 
-    if (
-      role !== "admin" &&
-      (!ticket.employee || ticket.employee.toString() !== employeeId)
-    ) {
+    if (role !== "admin" && ticket.employee.toString() !== employee) {
       return res.status(403).json({
-        error: "Accès interdit à ce ticket",
+        error: "Accès interdit à ce ticket.",
       });
     }
 
     return res.status(200).json(ticket);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({
-      error: "Erreur lors du chargement du ticket.",
+    res.status(500).json({
+      error: "Erreur récupération ticket.",
     });
   }
 };
@@ -64,16 +60,16 @@ export const updateStatus = async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
+    const { employee, role } = req.query;
 
-    //temporaire on simule l'id de l'employé
-    const employeeId = "698349f6792f119cbc759e76";
-
+    // id valide
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({
         error: "Identifiant du ticket invalide.",
       });
     }
 
+    // status valide
     if (!["todo", "doing", "done"].includes(status)) {
       return res.status(400).json({
         error: "Statut invalide.",
@@ -88,7 +84,7 @@ export const updateStatus = async (req, res) => {
       });
     }
 
-    if (!ticket.employee || ticket.employee.toString() !== employeeId) {
+    if (role !== "admin" && ticket.employee.toString() !== employee) {
       return res.status(403).json({
         error: "Accès interdit à ce ticket.",
       });
@@ -99,16 +95,9 @@ export const updateStatus = async (req, res) => {
 
     return res.status(200).json(ticket);
   } catch (error) {
-    console.error("UPDATE STATUS ERROR =", error);
-
-    return res.status(500).json({
-      error: error.message,
+    console.error(error);
+    res.status(500).json({
+      error: "Erreur mise à jour ticket.",
     });
   }
-
-  /*catch (error) {
-    return res.status(500).json({
-      error: "Erreur lors du changement de statut.",
-    });
-  }*/
 };

@@ -9,4 +9,4 @@ export const ticketRouter = express.Router();
 
 ticketRouter.get("/", getTickets);
 ticketRouter.get("/:id", getTicketById);
-ticketRouter.patch("/:id/status", updateStatus);
+ticketRouter.patch("/:id", updateStatus);
