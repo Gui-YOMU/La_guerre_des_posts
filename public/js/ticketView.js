@@ -9,11 +9,7 @@ const idEmploye = sessionStorage.getItem("id");
 const logout = document.querySelector("a");
 
 let dragged;
-const messWelcome = document.querySelector("h1")
-const lastname = sessionStorage.getItem("lastname")
-const firstname = sessionStorage.getItem("firstname")
-const idEmploye = sessionStorage.getItem("id")
-const logout = document.querySelector("a")
+
 
 
 
