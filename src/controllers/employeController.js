@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { Employe } from "../models/employe.js";
 import bcrypt from "bcrypt";
+import { Admin } from "../models/administrateur.js";
 
 export async function ajouterEmploye(req, res) {
   // ok
@@ -34,25 +35,45 @@ export async function loginByMail(req, res) {
     );
 
     if (!employLogin) {
-      throw new Error("Adresse mail introuvable");
+      const adminLogin = await Admin.findOne({ email }).select(
+      "motDePasse email firstname lastname");
+ 
+      if(!adminLogin){
+        throw new Error("Adresse mail introuvable");
+      }
+      // connexion Admin
+        res.json({
+          ok: true,
+          message: "Connexion réussie",
+          id: adminLogin._id,
+          lastname: adminLogin.lastname,
+          firstname: adminLogin.firstname,
+          role:"admin"
+        });
+      
+    }
+    // connexion  Employé
+    else{
+          const passwordValid = await bcrypt.compare(
+            motDePasse,
+            employLogin.motDePasse,
+          );
+
+          if (!passwordValid) {
+            throw new Error("Erreur mot de passe");
+          }
+          res.json({
+            ok: true,
+            message: "Connexion réussie",
+            id: employLogin._id,
+            lastname: employLogin.lastname,
+            firstname: employLogin.firstname,
+            role:"employe"
+          });
     }
 
-    const passwordValid = await bcrypt.compare(
-      motDePasse,
-      employLogin.motDePasse,
-    );
 
-    if (!passwordValid) {
-      throw new Error("Erreur mot de passe");
-    }
 
-    res.json({
-      ok: true,
-      message: "Connexion réussie",
-      id: employLogin._id,
-      lastname: employLogin.lastname,
-      firstname: employLogin.firstname,
-    });
   } catch (error) {
     console.error(error);
     res.json({ ok: false, error: error.message });

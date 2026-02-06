@@ -9,35 +9,44 @@ const idEmploye = sessionStorage.getItem("id");
 const logout = document.querySelector("a");
 
 let dragged;
+const messWelcome = document.querySelector("h1")
+const lastname = sessionStorage.getItem("lastname")
+const firstname = sessionStorage.getItem("firstname")
+const idEmploye = sessionStorage.getItem("id")
+const logout = document.querySelector("a")
 
-if (logout) {
-  logout.addEventListener("click", () => {
-    sessionStorage.clear();
-    window.location.href = "/src/views/login.html";
-  });
+
+
+if (!idEmploye) {
+    window.location.href = "/src/views/login.html"
+
 }
+logout.addEventListener("click",(e)=>{
+    sessionStorage.clear()
+})
 
-messWelcome.textContent = "bienvenue " + lastname + " " + firstname;
+messWelcome.textContent = "Bonjour " + lastname + " " + firstname 
+
+
 // Fonction de récupération de la liste des tickets via API
 
 async function getTickets() {
-  const idEmploye = sessionStorage.getItem("id");
-  let url = "http://localhost:3000/tickets";
-  if (idEmploye) {
-    url += `?employee=${idEmploye}`;
-  }
+    let url = "http://localhost:3000/tickets";
 
-  console.log("URL tickets appelée :", url);
+    // Une fois l'accès à l'id de l'employé connecté, modification de l'url pour ne récupérer que les tickets liés à l'employé
+    // if (employee) {
+    //     url += `?id=${employeeId}`;
+    // }
 
-  const response = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-type": "application/json",
-    },
-  });
-  const ticketsList = await response.json();
-  return ticketsList;
-}
+    const response = await fetch(url, {
+        method: "GET",
+        headers: {
+            "Content-type": "application/json"
+        }
+    });
+    const ticketsList = await response.json();
+    return ticketsList;
+};
 
 // Fonction d'affichage de la liste des tickets
 

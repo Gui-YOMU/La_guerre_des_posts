@@ -3,6 +3,7 @@ import * as adminController from "../controllers/administrateurController.js";
 
 export const administrateurRouter = express.Router();
 
+
 // Admin CRUD tickets
 administrateurRouter.post("/tickets", adminController.createTicket);
 administrateurRouter.put("/tickets/:id", adminController.updateTicket);

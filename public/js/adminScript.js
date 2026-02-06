@@ -1,7 +1,19 @@
+const idAdmin = sessionStorage.getItem("id")
+const logout = document.querySelector("a")
+
+if (!idAdmin) {
+ window.location.href = "/src/views/login.html"
+}
+
+logout.addEventListener("click",(e)=>{
+    sessionStorage.clear()
+})
+
 
 document.addEventListener("DOMContentLoaded", () => {
   loadTickets();
 });
+
 
 const url = "http://localhost:3000/admin";
 
