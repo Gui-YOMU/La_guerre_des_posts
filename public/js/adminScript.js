@@ -3,8 +3,12 @@ const logout = document.querySelector("a");
 
 if (!idAdmin) {
   window.location.href = "/src/views/login.html";
+  window.location.href = "/src/views/login.html";
 }
 
+logout.addEventListener("click", (e) => {
+  sessionStorage.clear();
+});
 logout.addEventListener("click", (e) => {
   sessionStorage.clear();
 });
@@ -36,7 +40,7 @@ async function loadTickets() {
       }
     });
   } catch (error) {
-    console.error("Erreur lors du chargement des tickets :", error);
+    // console.error("Erreur lors du chargement des tickets :", error);
     alert("Impossible de charger les tickets.");
   }
 }
@@ -82,11 +86,10 @@ async function createTicket() {
     const response = await fetch(url + "/tickets", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, content }),
+      body: JSON.stringify({ title, content, employee }),
     });
 
     if (!response.ok) {
-      const data = await response.json();
       alert(data.error || "Erreur lors de la création du ticket.");
       return;
     }

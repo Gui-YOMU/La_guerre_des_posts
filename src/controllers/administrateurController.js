@@ -18,6 +18,7 @@ export const createTicket = async (req, res) => {
   try {
     const { title, content, employee } = req.body;
 
+
     if (
       !title ||
       typeof title !== "string" ||
@@ -56,16 +57,18 @@ export const createTicket = async (req, res) => {
   }
 };
 
-/*export const listTickets = async (req, res) => {
+export const listTickets = async (req, res) => {
   try {
-    const tickets = await Ticket.find().sort({ createdAt: -1 });
+    const tickets = await Ticket.find().populate().sort({ createdAt: -1 });
+    console.log(tickets);
+    
     return res.status(STATUS.OK).json(tickets);
   } catch (error) {
     return res.status(STATUS.SERVER_ERROR).json({
       error: "Impossible de charger la liste des tickets.",
     });
   }
-};*/
+};
 
 export const updateTicket = async (req, res) => {
   try {

@@ -27,40 +27,30 @@
               required
             />
 
-            <textarea
-              id="content"
-              placeholder="Description de la tâche..."
-              rows="4"
-            ></textarea>
+      <textarea
+        id="content"
+        placeholder="Description de la tâche..."
+        rows="4"
+      ></textarea>
 
-            <div class="form-group">
-              <label for="employeeSelect">Assigner à un employé :</label>
-              <select id="employeeSelect">
-                <option value="">-- Sélectionner un employé --</option>
-              </select>
-              <button type="button">Créer le ticket</button>
-            </div>
-          </div>
-        </section>
-        <!-------------Modification de tickets---------------->
-        <section id="edit-zone" class="section-display">
-          <h2>Modifier le ticket</h2>
+      <button type="button">Créer le ticket</button>
+    </div>
 
-          <input id="editTitle" />
-          <textarea id="editContent"></textarea>
+    
+    <div class="form-group">
+      <label for="employeeSelect">Assigner à un employé :</label>
+      <select id="employeeSelect">
+        <option value="">-- Sélectionner un employé --</option>
+      </select>
+      <small>Cette liste sera remplie quand l'API employés sera prête.</small>
+    </div>
+  </section>
 
-          <select id="editEmployee"></select>
-
-          <button id="saveEdit">Sauvegarder</button>
-          <button id="deleteTicket">Supprimer</button>
-        </section>
-      </div>
-      <!---------------Zone d'assignation---------------->
-      <section class="kanban">
-        <div class="column">
-          <h3>NON ASSIGNÉS</h3>
-          <div class="cards" id="unassigned"></div>
-        </div>
+  <main class="kanban">
+    <div class="column" id="todo">
+      <h3>À FAIRE (Todo)</h3>
+      <div class="cards" id="todo-cards"></div>
+    </div>
 
         <div class="column" id="doing">
           <h3>ASSIGNÉS</h3>

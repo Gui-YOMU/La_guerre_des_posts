@@ -34,6 +34,7 @@ const employeSchema = mongoose.Schema(
       ],
       select: false,
     },
+   
   },
   { timestamps: true },
 );
