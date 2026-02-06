@@ -8,7 +8,7 @@ if (!idAdmin) {
 logout.addEventListener("click",(e)=>{
     sessionStorage.clear()
 })
-
+ 
 
 document.addEventListener("DOMContentLoaded", () => {
   loadTickets();
