@@ -10,13 +10,14 @@ const logout = document.querySelector("a");
 
 let dragged;
 
-if (logout) {
-  logout.addEventListener("click", () => {
-    sessionStorage.clear();
-    window.location.href = "/src/views/login.html";
-  });
+if (!idEmploye) {
+  window.location.href = "/src/views/login.html";
 }
+logout.addEventListener("click", () => {
+  sessionStorage.clear();
 
+
+});
 messWelcome.textContent = "bienvenue " + lastname + " " + firstname;
 // Fonction de récupération de la liste des tickets via API
 

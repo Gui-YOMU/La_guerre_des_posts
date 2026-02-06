@@ -2,13 +2,13 @@ const idAdmin = sessionStorage.getItem("id")
 const logout = document.querySelector("a")
 
 if (!idAdmin) {
- window.location.href = "/src/views/login.html"
+  window.location.href = "/src/views/login.html"
 }
 
-logout.addEventListener("click",(e)=>{
-    sessionStorage.clear()
+logout.addEventListener("click", (e) => {
+  sessionStorage.clear()
 })
- 
+
 
 document.addEventListener("DOMContentLoaded", () => {
   loadTickets();
@@ -22,7 +22,7 @@ async function loadTickets() {
     const response = await fetch(url + "/tickets");
     const tickets = await response.json();
 
-  
+
     document.getElementById("todo-cards").innerHTML = "";
     document.getElementById("doing-cards").innerHTML = "";
     document.getElementById("done-cards").innerHTML = "";
@@ -39,7 +39,7 @@ async function loadTickets() {
       }
     });
   } catch (error) {
-    console.error("Erreur lors du chargement des tickets :", error);
+    // console.error("Erreur lors du chargement des tickets :", error);
     alert("Impossible de charger les tickets.");
   }
 }
@@ -54,16 +54,14 @@ function createTicketHTML(ticket) {
     <p>${ticket.content}</p>
 
     <div class="actions">
-      ${
-        ticket.status !== "doing"
-          ? `<button onclick="updateStatus('${ticket._id}', 'doing')">➔ En cours</button>`
-          : ""
-      }
-      ${
-        ticket.status !== "done"
-          ? `<button onclick="updateStatus('${ticket._id}', 'done')">➔ Terminé</button>`
-          : ""
-      }
+      ${ticket.status !== "doing"
+      ? `<button onclick="updateStatus('${ticket._id}', 'doing')">➔ En cours</button>`
+      : ""
+    }
+      ${ticket.status !== "done"
+      ? `<button onclick="updateStatus('${ticket._id}', 'done')">➔ Terminé</button>`
+      : ""
+    }
       <button class="delete-btn" onclick="deleteTicket('${ticket._id}')">
         Supprimer
       </button>
@@ -77,28 +75,34 @@ function createTicketHTML(ticket) {
 async function createTicket() {
   const title = document.getElementById("title").value.trim();
   const content = document.getElementById("content").value.trim();
-  
+  const employee = document.querySelector("#employeeSelect").value;
+
+
+  if (!employee) {
+    alert("Veuillez sélectionné un employé.");
+    return;
+  }
+
   if (!title || !content) {
     alert("Veuillez remplir le titre et la description.");
     return;
   }
-  
+
   try {
     const response = await fetch(url + "/tickets", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, content }),
+      body: JSON.stringify({ title, content, employee }),
     });
-    
+    const data = await response.json();
     if (!response.ok) {
-      const data = await response.json();
       alert(data.error || "Erreur lors de la création du ticket.");
       return;
     }
-    
-    
-    document.getElementById("title").value = "";
-    document.getElementById("content").value = "";
+
+
+    // document.getElementById("title").value = "";
+    // document.getElementById("content").value = "";
 
     loadTickets();
   } catch (error) {
@@ -106,8 +110,36 @@ async function createTicket() {
     alert("Erreur serveur.");
   }
 }
-document.querySelector("button").addEventListener("click",createTicket);
+document.querySelector("button").addEventListener("click", createTicket);
 
+async function displayTickets() {
+
+  const response = await fetch(`http://localhost:3000/tickets`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  const tickets = await response.json()
+  console.log(tickets);
+
+  const test = document.querySelector(".test")
+
+
+  tickets.forEach((ticket) => {
+    const title = document.createElement("p")
+    const content = document.createElement("input")
+    title.textContent = ticket.title
+    content.value = ticket.content
+ 
+    const id = ticket._id
+
+    test.append(id,title,content)
+
+  })
+
+}
+displayTickets()
 
 async function updateStatus(ticketId, status) {
   try {
@@ -117,12 +149,38 @@ async function updateStatus(ticketId, status) {
       body: JSON.stringify({ status }),
     });
 
+
+
     loadTickets();
   } catch (error) {
     console.error("Erreur changement de statut :", error);
     alert("Impossible de changer le statut.");
   }
 }
+
+async function employeeInSelect() {
+  const response = await fetch("http://localhost:3000/employe", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+  const employees = await response.json();
+
+  const listeSelect = document.querySelector("#employeeSelect")
+  console.log(listeSelect);
+
+  employees.forEach((employee) => {
+    const option = document.createElement("option")
+    option.value = employee._id
+    option.textContent = employee.lastname
+    console.log(employee._id);
+
+
+    listeSelect.append(option)
+  })
+}
+employeeInSelect()
 
 
 async function assignEmployee(ticketId, employeeId) {
@@ -155,3 +213,4 @@ async function deleteTicket(ticketId) {
     alert("Impossible de supprimer le ticket.");
   }
 }
+
