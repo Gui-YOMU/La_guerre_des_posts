@@ -2,7 +2,7 @@ const todo = document.querySelector("#todo");
 const doing = document.querySelector("#doing");
 const done = document.querySelector("#done");
 const drops = document.querySelectorAll(".drop");
-const messWelcome = document.querySelector("h1");
+const messWelcome = document.querySelector(".main-title");
 const lastname = sessionStorage.getItem("lastname");
 const firstname = sessionStorage.getItem("firstname");
 const idEmploye = sessionStorage.getItem("id");
@@ -17,7 +17,7 @@ if (logout) {
   });
 }
 
-messWelcome.textContent = "bienvenue " + lastname + " " + firstname;
+messWelcome.textContent = "Bienvenue " + lastname + " " + firstname;
 // Fonction de récupération de la liste des tickets via API
 
 async function getTickets() {
@@ -53,6 +53,13 @@ async function displayTickets() {
     draggable = document.createElement("div");
     draggable.setAttribute("draggable", "true");
     draggable.setAttribute("id", ticket._id);
+
+    // classe de base
+    draggable.classList.add("ticket");
+
+    // classe selon statut
+    draggable.classList.add(ticket.status);
+
     title = document.createElement("h4");
     title.textContent = ticket.title;
     content = document.createElement("p");
@@ -117,6 +124,8 @@ drops.forEach((dropZone) => {
     await updateTicketStatus(ticketId, newStatus);
 
     dropZone.appendChild(dragged);
+    dragged.classList.remove("todo", "doing", "done");
+    dragged.classList.add(newStatus);
   });
 });
 

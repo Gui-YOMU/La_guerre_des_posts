@@ -1,28 +1,7 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
-#user {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  padding: 20px;
-}
-a{
-    display: flex;
-    justify-content: right;
-    padding: 15px;
-    color: #667eea;
-    text-decoration: none;
-}
-
-h2 {
+.title-secondary {
   text-align: center;
-  border: 3px solid black;
-  width: 10%;
-  margin: auto;
+  margin: 1.5rem 0 12px 0;
+  font-size: 1.5rem;
 }
 
 #tasklist {
@@ -32,54 +11,15 @@ h2 {
   column-gap: 10px;
 }
 
-article {
-  h3 {
-    text-align: center;
-    padding: 15px;
-  }
+article h3 {
+  text-align: center;
+  padding: 15px;
+}
 
-  > div {
-    height: 75vh;
-    padding: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-
-    div[draggable="true"] {
-      border: 1px solid black;
-      width: 45%;
-      height: 100px;
-      background-color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      h4,
-      p {
-        text-align: center;
-        align-content: center;
-        padding: 5px;
-      }
-
-      h4 {
-        height: 20%;
-      }
-
-      p {
-        height: 80%;
-      }
-    }
-  }
-
-  #todo {
-    background-color: lightcoral;
-  }
-
-  #doing {
-    background-color: lightgoldenrodyellow;
-  }
-
-  #done {
-    background-color: lightgreen;
-  }
+.column {
+  height: 70vh;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }

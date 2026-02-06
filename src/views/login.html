@@ -1,33 +1,40 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-    <link rel="stylesheet" href="/public/css/main.css">
-
-</head>
-<body>
+    <link rel="stylesheet" href="/public/css/main.css" />
+    <link rel="stylesheet" href="/public/css/login.css" />
+  </head>
+  <body>
     <main>
-        <h2>Employé</h2>
-        <section class="center">
+      <h2>Employé</h2>
+      <section class="center">
+        <form action="" id="form">
+          <div>
+            <label for="email">Email</label>
+            <input
+              id="email"
+              type="text"
+              name="email"
+              placeholder="Adresse mail"
+            />
+          </div>
 
-            <form action="" id="form">
-                <div> 
-                    <label for="email">Email</label>
-                    <input id="email" type="text" name="email" placeholder="Adresse mail">
-                </div>
+          <div>
+            <label for="password">Mot de Passe</label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              placeholder="Mot de passe"
+            />
+          </div>
 
-                 <div> 
-                    <label for="password">Mot de Passe</label>
-                    <input id="password" type="password" name="password" placeholder="Mot de passe">
-                </div>
-
-                <button type="submit">Se connecter</button>
-            </form>  
-        </section>  
-
+          <button type="submit">Se connecter</button>
+        </form>
+      </section>
     </main>
-      <script src="/public/js/login.js"></script>
-    
-</body>
-</html> 
+    <script src="/public/js/login.js"></script>
+  </body>
+</html>

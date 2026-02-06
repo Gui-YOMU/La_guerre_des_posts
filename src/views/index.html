@@ -1,68 +1,74 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PostRi7 - Espace Kevin (Admin)</title>
-  <link rel="stylesheet" href="public/css/style.css" />
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PostRi7 - Espace Kevin (Admin)</title>
+    <link rel="stylesheet" href="../../public/css/adminView.css" />
+    <link rel="stylesheet" href="../../public/css/main.css" />
+  </head>
+  <body class="body">
+    <header class="header">
+      <h1 class="main-title">Tableau de Bord de Kevin</h1>
+      <p class="main-p">Gestionnaire de tickets PostRi7</p>
+      <a class="logout" href="/src/views/login.html">Se déconnecter</a>
+    </header>
+    <main>
+      <div class="ticket-management">
+        <!---------------Création de tickets---------------->
+        <section class="section-display" id="creation-ticket">
+          <h2 class="section-title">Ajouter une nouvelle tâche</h2>
 
-  <header>
-    <h1>Tableau de Bord de Kevin</h1>
-    <p>Gestionnaire de tickets PostRi7</p>
-    <a href="/src/views/login.html">Se deconnecter</a>
-  </header>
+          <div class="form-group">
+            <input
+              type="text"
+              id="title"
+              placeholder="Titre du ticket (ex: Debug API)"
+              required
+            />
 
-  <section id="creation-ticket">
-    <h2>Ajouter une nouvelle tâche</h2>
+            <textarea
+              id="content"
+              placeholder="Description de la tâche..."
+              rows="4"
+            ></textarea>
 
-    <div class="form-group">
-      
-      <input
-        type="text"
-        id="title"
-        placeholder="Titre du ticket (ex: Debug API)"
-        required
-      />
+            <div class="form-group">
+              <label for="employeeSelect">Assigner à un employé :</label>
+              <select id="employeeSelect">
+                <option value="">-- Sélectionner un employé --</option>
+              </select>
+              <button type="button">Créer le ticket</button>
+            </div>
+          </div>
+        </section>
+        <!-------------Modification de tickets---------------->
+        <section id="edit-zone" class="section-display">
+          <h2>Modifier le ticket</h2>
 
-      <textarea
-        id="content"
-        placeholder="Description de la tâche..."
-        rows="4"
-      ></textarea>
+          <input id="editTitle" />
+          <textarea id="editContent"></textarea>
 
-      <button type="button">Créer le ticket</button>
-    </div>
+          <select id="editEmployee"></select>
 
-    
-    <div class="form-group">
-      <label for="employeeSelect">Assigner à un employé :</label>
-      <select id="employeeSelect">
-        <option value="">-- Sélectionner un employé --</option>
-      </select>
-      <small>Cette liste sera remplie quand l'API employés sera prête.</small>
-    </div>
-  </section>
+          <button id="saveEdit">Sauvegarder</button>
+          <button id="deleteTicket">Supprimer</button>
+        </section>
+      </div>
+      <!---------------Zone d'assignation---------------->
+      <section class="kanban">
+        <div class="column">
+          <h3>NON ASSIGNÉS</h3>
+          <div class="cards" id="unassigned"></div>
+        </div>
 
-  <main class="kanban">
-    <div class="column" id="todo">
-      <h3>À FAIRE (Todo)</h3>
-      <div class="cards" id="todo-cards"></div>
-    </div>
-
-    <div class="column" id="doing">
-      <h3>EN COURS (Doing)</h3>
-      <div class="cards" id="doing-cards"></div>
-    </div>
-
-    <div class="column" id="done">
-      <h3>TERMINÉ (Done)</h3>
-      <div class="cards" id="done-cards"></div>
-    </div>
-  </main>
-
- 
-  <script src="../../public/js/adminScript.js"></script>
-</body>
+        <div class="column" id="doing">
+          <h3>ASSIGNÉS</h3>
+          <div class="cards" id="assigned"></div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">&copy; 2026 Sam & Christel</footer>
+    <script src="../../public/js/adminScript.js"></script>
+  </body>
 </html>

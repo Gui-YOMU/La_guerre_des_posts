@@ -4,33 +4,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../../public/css/ticketView.css" />
+    <link rel="stylesheet" href="../../public/css/main.css" />
     <title>Tickets</title>
   </head>
-  <body>
-    <main>
-       <div id="user">
-        <h1></h1>
-        <button type="button" class="admin">Mode administrateur</button>
-      </div>
+  <body class="body">
+  <header class="header">
+      <div id="user">
+      <h1 class="main-title"></h1>
+    </div>  
+    <p class="main-p">Employé PostRi7</p>
+      <a class="logout" href="/src/views/login.html">Se déconnecter</a>
+  </header>
+  <main>
       <section>
-        <h2>Liste des tâches</h2>
-        <div id="tasklist">
-          <article>
-            <h3>À faire</h3>
-            <div id="todo" class="drop"></div>
-          </article>
-          <article>
-            <h3>En cours</h3>
-            <div id="doing" class="drop"></div>
-          </article>
-          <article>
-            <h3>Terminées</h3>
-            <div id="done" class="drop"></div>
-          </article>
-        <a href="/src/views/login.html">Se deconnecter</a>
+        <h2 class="title-secondary section-display">Liste des tâches</h2>
+        <div class="kanban" id="tasklist">
+          <div class="column">
+            <h3 class="section-title">À FAIRE (Todo)</h3>
+            <div id="todo" class="cards drop"></div>
+          </div>
+          <div class="column">
+            <h3 class="section-title">EN COURS (Doing)</h3>
+            <div id="doing" class="cards drop"></div>
+          </div>
+          <div class="column">
+            <h3 class="section-title">TERMINÉ (Done)</h3>
+            <div id="done" class="cards drop"></div>
+          </div>
       </section>
     </main>
-
+<footer class="footer">&copy; 2026 Sam & Christel</footer>
     <script src="../../public/js/ticketView.js"></script>
   </body>
 </html>
