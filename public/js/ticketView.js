@@ -10,39 +10,34 @@ const logout = document.querySelector("a");
 
 let dragged;
 
-
-
-
-if (!idEmploye) {
-    window.location.href = "/src/views/login.html"
-
+if (logout) {
+  logout.addEventListener("click", () => {
+    sessionStorage.clear();
+    window.location.href = "/src/views/login.html";
+  });
 }
-logout.addEventListener("click",(e)=>{
-    sessionStorage.clear()
-})
 
-messWelcome.textContent = "Bonjour " + lastname + " " + firstname 
-
-
+messWelcome.textContent = "bienvenue " + lastname + " " + firstname;
 // Fonction de récupération de la liste des tickets via API
 
 async function getTickets() {
-    let url = "http://localhost:3000/tickets";
+  const idEmploye = sessionStorage.getItem("id");
+  let url = "http://localhost:3000/tickets";
+  if (idEmploye) {
+    url += `?employee=${idEmploye}`;
+  }
 
-    // Une fois l'accès à l'id de l'employé connecté, modification de l'url pour ne récupérer que les tickets liés à l'employé
-    // if (employee) {
-    //     url += `?id=${employeeId}`;
-    // }
+  console.log("URL tickets appelée :", url);
 
-    const response = await fetch(url, {
-        method: "GET",
-        headers: {
-            "Content-type": "application/json"
-        }
-    });
-    const ticketsList = await response.json();
-    return ticketsList;
-};
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+    },
+  });
+  const ticketsList = await response.json();
+  return ticketsList;
+}
 
 // Fonction d'affichage de la liste des tickets
 
