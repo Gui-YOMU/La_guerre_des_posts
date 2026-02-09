@@ -90,8 +90,40 @@
   opacity: 0.9;
 }
 
-.actions .delete-btn {
-  background: #dc2626;
+.delete-btn {
+  margin: 0.3rem;
+  padding: 4px 6px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  color: white;
+  transition: opacity 0.2s ease;
+  background: #972121;
+}
+
+.assign-btn .delete-btn {
+  margin: 0.3rem;
+  padding: 4px 6px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  color: white;
+  transition: opacity 0.2s ease;
+  background: #972121;
+}
+
+.assign-btn {
+  margin: 0.3rem;
+  padding: 4px 6px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  color: white;
+  transition: opacity 0.2s ease;
+  background: #212197;
 }
 
 @media (max-width: 980px) {
@@ -100,11 +132,17 @@
   }
 }
 
-.ticket-management {
+.dashboard {
+  padding: 20px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 20px;
 }
 
-#creation-ticket #edit-zone {
-  width: 45%;
+.box {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.08);
 }

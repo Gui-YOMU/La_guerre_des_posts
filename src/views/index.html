@@ -7,14 +7,18 @@
     <link rel="stylesheet" href="../../public/css/adminView.css" />
     <link rel="stylesheet" href="../../public/css/main.css" />
   </head>
+
   <body class="body">
     <header class="header">
       <h1 class="main-title">Tableau de Bord de Kevin</h1>
       <p class="main-p">Gestionnaire de tickets PostRi7</p>
-      <a class="logout" href="/src/views/login.html">Se déconnecter</a>
+      <a id="logout" class="logout" href="/src/views/login.html"
+        >Se déconnecter</a
+      >
     </header>
-    <main>
-      <div class="ticket-management">
+
+    <main class="dashboard">
+      <div class="box creation">
         <!---------------Création de tickets---------------->
         <section class="section-display" id="creation-ticket">
           <h2 class="section-title">Ajouter une nouvelle tâche</h2>
@@ -27,41 +31,59 @@
               required
             />
 
-      <textarea
-        id="content"
-        placeholder="Description de la tâche..."
-        rows="4"
-      ></textarea>
-      <button type="button">Créer le ticket</button>
-    </div>
+            <textarea
+              id="content"
+              placeholder="Description de la tâche..."
+              rows="4"
+            ></textarea>
+          </div>
 
-    
-    <div class="form-group">
-   
-      <label for="employeeSelect">Assigner à un employé :</label>
-      <select id="employeeSelect">
-        <option value="">-- Sélectionner un employé --</option>
-      </select>
-    
+          <div class="form-group">
+            <label for="employeeSelect">Assigner à un employé :</label>
+            <select id="employeeSelect">
+              <option value="">-- Sélectionner un employé --</option>
+            </select>
 
-      <button type="button">Créer le ticket</button>
-    </div>
+            <button type="button" id="createTicketBtn">Créer le ticket</button>
+          </div>
+        </section>
 
+        <!-- Zone édition -->
+        <section id="edit-ticket-zone" class="section-display hidden">
+          <h2 class="section-title">Modifier le ticket</h2>
 
-    <div class="test"></div>
-  </section>
+          <div class="form-group">
+            <label>Titre</label>
+            <input type="text" id="editTitle" />
 
-  <main class="kanban">
-    <div class="column" id="todo">
-      <h3>À FAIRE (Todo)</h3>
-      <div class="cards" id="todo-cards"></div>
-    </div>
+            <label>Description</label>
+            <textarea id="editContent" rows="4"></textarea>
 
-        <div class="column" id="doing">
-          <h3>ASSIGNÉS</h3>
-          <div class="cards" id="assigned"></div>
+            <label>Assigner à un employé</label>
+            <select id="editEmployee">
+              <option value="">Non assigné</option>
+            </select>
+
+            <div class="edit-buttons">
+              <button id="saveEditBtn">Sauvegarder</button>
+              <button id="deleteTicketBtn" class="danger">Supprimer</button>
+              <button id="cancelEditBtn" class="secondary">Fermer</button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="kanban">
+        <div class="column">
+          <h3>Non assignés</h3>
+          <div id="unassigned"></div>
         </div>
-      </section>
+
+        <div class="column">
+          <h3>Assignés</h3>
+          <div id="assigned"></div>
+        </div>
+      </div>
     </main>
     <footer class="footer">&copy; 2026 Sam & Christel</footer>
     <script src="../../public/js/adminScript.js"></script>

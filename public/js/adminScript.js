@@ -1,16 +1,13 @@
 const idAdmin = sessionStorage.getItem("id");
-const logout = document.querySelector("a");
+const logout = document.getElementById("logout");
+let employeesMap = {};
 
 if (!idAdmin) {
   window.location.href = "/src/views/login.html";
-  window.location.href = "/src/views/login.html";
 }
-
-logout.addEventListener("click", (e) => {
++logout.addEventListener("click", () => {
   sessionStorage.clear();
-});
-logout.addEventListener("click", (e) => {
-  sessionStorage.clear();
+  window.location.href = "/src/views/login.html";
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -21,26 +18,25 @@ const url = "http://localhost:3000/admin";
 
 async function loadTickets() {
   try {
-    const response = await fetch(url + "/tickets");
+    const response = await fetch("http://localhost:3000/tickets");
     const tickets = await response.json();
 
-    document.getElementById("todo-cards").innerHTML = "";
-    document.getElementById("doing-cards").innerHTML = "";
-    document.getElementById("done-cards").innerHTML = "";
+    const unassigned = document.getElementById("unassigned");
+    const assigned = document.getElementById("assigned");
+
+    unassigned.innerHTML = "";
+    assigned.innerHTML = "";
 
     tickets.forEach((ticket) => {
       const ticketElement = createTicketHTML(ticket);
 
-      if (ticket.status === "todo") {
-        document.getElementById("todo-cards").appendChild(ticketElement);
-      } else if (ticket.status === "doing") {
-        document.getElementById("doing-cards").appendChild(ticketElement);
-      } else if (ticket.status === "done") {
-        document.getElementById("done-cards").appendChild(ticketElement);
+      if (ticket.employee) {
+        assigned.appendChild(ticketElement);
+      } else {
+        unassigned.appendChild(ticketElement);
       }
     });
   } catch (error) {
-    // console.error("Erreur lors du chargement des tickets :", error);
     alert("Impossible de charger les tickets.");
   }
 }
@@ -49,25 +45,21 @@ function createTicketHTML(ticket) {
   const div = document.createElement("div");
   div.className = "ticket";
 
+  let employeeName = "";
+
+  if (ticket.employee) {
+    employeeName = employeesMap[ticket.employee] || ticket.employee;
+  }
+
   div.innerHTML = `
     <h4>${ticket.title}</h4>
     <p>${ticket.content}</p>
-
-    <div class="actions">
-      ${
-        ticket.status !== "doing"
-          ? `<button onclick="updateStatus('${ticket._id}', 'doing')">➔ En cours</button>`
-          : ""
-      }
-      ${
-        ticket.status !== "done"
-          ? `<button onclick="updateStatus('${ticket._id}', 'done')">➔ Terminé</button>`
-          : ""
-      }
-      <button class="delete-btn" onclick="deleteTicket('${ticket._id}')">
-        Supprimer
-      </button>
-    </div>
+    ${
+      ticket.employee
+        ? `<span class="badge">Assigné à ${employeeName}</span>`
+        : `<button class="assign-btn">Assigner</button>`
+    }
+    <button class="delete-btn" data-id="${ticket._id}">Supprimer</button>
   `;
 
   return div;
@@ -76,9 +68,10 @@ function createTicketHTML(ticket) {
 async function createTicket() {
   const title = document.getElementById("title").value.trim();
   const content = document.getElementById("content").value.trim();
+  const employee = document.getElementById("employeeSelect")?.value || null;
 
-  if (!title || !content) {
-    alert("Veuillez remplir le titre et la description.");
+  if (!title) {
+    alert("Titre requis");
     return;
   }
 
@@ -90,7 +83,7 @@ async function createTicket() {
     });
 
     if (!response.ok) {
-      alert(data.error || "Erreur lors de la création du ticket.");
+      alert("Erreur création");
       return;
     }
 
@@ -99,11 +92,13 @@ async function createTicket() {
 
     loadTickets();
   } catch (error) {
-    console.error("Erreur création ticket :", error);
-    alert("Erreur serveur.");
+    console.error(error);
   }
 }
-document.querySelector("button").addEventListener("click", createTicket);
+
+document
+  .querySelector("#createTicketBtn")
+  .addEventListener("click", createTicket);
 
 async function updateStatus(ticketId, status) {
   try {
@@ -149,3 +144,50 @@ async function deleteTicket(ticketId) {
     alert("Impossible de supprimer le ticket.");
   }
 }
+
+async function openAssign(ticketId) {
+  const employeeId = prompt("ID de l'employé :");
+
+  if (!employeeId) return;
+
+  await assignEmployee(ticketId, employeeId);
+}
+
+async function loadEmployees() {
+  try {
+    const res = await fetch("http://localhost:3000/employe");
+    const employees = await res.json();
+
+    employees.forEach((emp) => {
+      employeesMap[emp._id] = emp.lastname; // ou emp.username
+    });
+  } catch (e) {
+    console.error("Erreur chargement employés");
+  }
+}
+
+async function init() {
+  await loadEmployees();
+  await loadTickets();
+
+  document.addEventListener("click", async (e) => {
+    if (e.target.classList.contains("delete-btn")) {
+      const id = e.target.dataset.id;
+
+      const confirmDelete = confirm("Supprimer ce ticket ?");
+      if (!confirmDelete) return;
+
+      try {
+        await fetch(`http://localhost:3000/admin/tickets/${id}`, {
+          method: "DELETE",
+        });
+
+        await loadTickets();
+      } catch (err) {
+        alert("Erreur suppression");
+      }
+    }
+  });
+}
+
+init();
